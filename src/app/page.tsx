@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
+import StarField from '../components/StarField';
 
 export default function FixzoApp() {
   const [step, setStep] = useState('landing');
@@ -73,7 +74,8 @@ export default function FixzoApp() {
   // PANTALLA DE PROCESAMIENTO
   if (step === 'processing') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 flex items-center justify-center relative">
+          <StarField />
         <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4 text-center">
           <div className="animate-spin rounded-full h-20 w-20 border-4 border-blue-200 border-t-blue-600 mx-auto mb-6"></div>
           <h3 className="text-2xl font-bold text-gray-800 mb-3">🤖 Analizando tu problema...</h3>
@@ -124,23 +126,22 @@ export default function FixzoApp() {
     ];
 
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative">
+          <StarField />
         {/* Header */}
         <div className="bg-white/10 backdrop-blur-sm border-b border-white/20">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div className="flex items-center">
+          <div className="max-w-5xl mx-auto px-4 py-4 flex justify-center relative">
               <Image 
                 src="/images/logo.png" 
                 alt="FIXZO Logo" 
-                width={40} 
-                height={40}
-                className="mr-3"
+                width={100} 
+                height={100}
+                className=""
               />
-              <h1 className="text-xl font-bold text-white">FIXZO</h1>
-            </div>
+
             <button 
               onClick={() => setStep('landing')}
-              className="text-white/80 hover:text-white flex items-center"
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/80 hover:text-white flex items-center"
             >
               ✕ Cerrar
             </button>
@@ -241,17 +242,18 @@ export default function FixzoApp() {
   // FORMULARIO MEJORADO
   if (step === 'form') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 p-8 relative">
+          <StarField />
         <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-2xl p-8">
-          <div className="flex items-center mb-6">
+          <div className="flex justify-center mb-6">
             <Image 
               src="/images/logo.png" 
               alt="FIXZO Logo" 
-              width={40} 
-              height={40}
-              className="mr-3"
+              width={100} 
+              height={100}
+              className=""
             />
-            <h1 className="text-3xl font-bold text-gray-800">FIXZO</h1>
+            
           </div>
           
           <div className="text-center mb-8">
@@ -367,17 +369,18 @@ export default function FixzoApp() {
 
   // LANDING PRINCIPAL
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative">
+      <StarField />
       <nav className="bg-white/10 backdrop-blur-sm shadow-sm border-b border-white/20">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center">
+        <div className="max-w-6xl mx-auto px-4 py-6 flex justify-center">
           <Image 
             src="/images/logo.png" 
             alt="FIXZO Logo" 
-            width={48} 
-            height={48}
-            className="mr-3"
+            width={120} 
+            height={120}
+            className=""
           />
-          <span className="text-2xl font-bold text-white">FIXZO</span>
+        
         </div>
       </nav>
 
@@ -438,26 +441,24 @@ export default function FixzoApp() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-white mb-6">Nuestro Servicio</h2>
-              <p className="text-blue-100 mb-6 leading-relaxed">
+              <h2 className="text-4xl font-black text-white mb-6 drop-shadow-lg">Nuestro Servicio</h2>
+              <p className="text-xl text-blue-100 mb-8">
                 Imagina tu dispositivo en manos de un experto con solo un clic. FIXZO te conecta 
                 con técnicos calificados para ofrecerte soluciones rápidas y efectivas.
               </p>
-              <p className="text-blue-100 leading-relaxed">
+              <p className="text-xl text-blue-100 mb-8">
                 Desde la instalación de programas hasta la recuperación de datos, nuestro servicio 
                 hace que el soporte técnico sea fácil, confiable y accesible.
               </p>
             </div>
             <div className="relative">
-              <div className="rounded-xl overflow-hidden shadow-2xl">
                 <Image 
                   src="/images/service-1.png"
                   alt="Servicio técnico profesional"
                   width={500}
                   height={350}
-                  className="w-full h-auto"
+                  className="w-full h-auto rounded-xl"
                 />
-              </div>
             </div>
           </div>
         </div>
