@@ -275,7 +275,7 @@ export default function FixzoApp() {
                 value={problem}
                 onChange={(e) => setProblem(e.target.value)}
                 placeholder="Ejemplo: Mi computadora está muy lenta desde hace una semana. Al abrir programas se demora mucho, el disco siempre está al 100% y a veces se cuelga..."
-                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-40"
+                className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none h-40 text-gray-800"
                 maxLength={800}
               />
               <div className="flex justify-between items-center mt-2">
