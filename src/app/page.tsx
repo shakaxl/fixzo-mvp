@@ -26,33 +26,47 @@ export default function FixzoApp() {
   };
 
   const handleAnalyze = async () => {
-    if (!problem.trim()) {
-      alert('Por favor describe tu problema técnico');
-      return;
-    }
+  if (!problem.trim()) {
+    alert('Por favor describe tu problema técnico');
+    return;
+  }
 
-    if (problem.trim().length < 10) {
-      alert('Por favor describe tu problema con más detalle (mínimo 10 caracteres)');
-      return;
-    }
+  if (problem.trim().length < 10) {
+    alert('Por favor describe tu problema con más detalle (mínimo 10 caracteres)');
+    return;
+  }
 
-    setStep('processing');
-    
-    // Simular procesamiento
-    setTimeout(() => {
-      setUserLocation('San Isidro, Lima');
-      setStep('results');
-      
-      // Capturar lead (lo verás en consola del navegador)
-      console.log('🎯 LEAD CAPTURADO:', {
-        problema: problem,
-        archivo: file ? file.name : 'Sin archivo',
-        ubicacion: 'San Isidro, Lima',
-        timestamp: new Date().toISOString(),
-        caracteres: problem.length
-      });
-    }, 3000);
-  };
+  setStep('processing');
+  
+  // 🚨 NUEVA PARTE - Enviar notificación inmediata
+  try {
+    const leadData = {
+      problema: problem,
+      archivo: file ? file.name : 'Sin archivo',
+      timestamp: new Date().toISOString(),
+      userLocation: 'San Isidro, Lima'
+    };
+
+    // Enviar a nuestra API
+    const response = await fetch('/api/notify-lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(leadData)
+    });
+
+    if (response.ok) {
+      console.log('✅ Notificación enviada correctamente');
+    }
+  } catch (error) {
+    console.error('❌ Error enviando notificación:', error);
+  }
+  
+  // Resto igual - simulación actual
+  setTimeout(() => {
+    setUserLocation('San Isidro, Lima');
+    setStep('results');
+  }, 3000);
+};
 
   const handleChooseTechnician = (techName: string) => {
     console.log('💰 CONVERSIÓN:', {
