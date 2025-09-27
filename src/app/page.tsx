@@ -12,6 +12,8 @@ export default function FixzoApp() {
   const [userLocation, setUserLocation] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [technicians, setTechnicians] = useState<any[]>([]);
+
   const handleStartDemo = () => {
     setStep('form');
   };
@@ -26,44 +28,139 @@ export default function FixzoApp() {
   };
 
   const handleAnalyze = async () => {
-  if (!problem.trim()) {
-    alert('Por favor describe tu problema técnico');
-    return;
-  }
-
-  if (problem.trim().length < 10) {
-    alert('Por favor describe tu problema con más detalle (mínimo 10 caracteres)');
+  if (!problem.trim() || problem.trim().length < 10) {
+    alert('Por favor describe tu problema con más detalle');
     return;
   }
 
   setStep('processing');
   
-  // 🚨 NUEVA PARTE - Enviar notificación inmediata
-  try {
-    const leadData = {
-      problema: problem,
-      archivo: file ? file.name : 'Sin archivo',
-      timestamp: new Date().toISOString(),
-      userLocation: 'San Isidro, Lima'
-    };
+  // Función para enviar notificación
+  const sendNotification = async (location: string) => {
+    try {
+      const leadData = {
+        problema: problem,
+        archivo: file ? file.name : 'Sin archivo',
+        timestamp: new Date().toISOString(),
+        userLocation: location
+      };
 
-    // Enviar a nuestra API
-    const response = await fetch('/api/notify-lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(leadData)
-    });
+      await fetch('/api/notify-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadData)
+      });
 
-    if (response.ok) {
       console.log('✅ Notificación enviada correctamente');
+    } catch (error) {
+      console.error('❌ Error enviando notificación:', error);
     }
-  } catch (error) {
-    console.error('❌ Error enviando notificación:', error);
+  };
+
+  // INTENTAR GPS PRIMERO
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      // ÉXITO GPS
+      // ÉXITO GPS
+async (position) => {
+  try {
+    const { latitude, longitude } = position.coords;
+    console.log('📍 GPS obtenido:', latitude, longitude);
+    
+    // Convertir coordenadas a dirección
+    const apiKey = process.env.NEXT_PUBLIC_IPGEOLOCATION_API_KEY || 'tu-api-key-aqui';
+    console.log('🔗 URL llamada:', `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`);
+    
+    const geoResponse = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`);
+    const geoData = await geoResponse.json();
+    
+    console.log('📡 Respuesta completa GPS API:', geoData);
+    console.log('🏠 Distrito detectado:', geoData.district);
+    console.log('🏙️ Ciudad detectada:', geoData.city);
+    console.log('🗺️ Provincia detectada:', geoData.state_prov);
+          
+          const preciseLocation = `${geoData.district || geoData.city || 'Tu zona'}, ${geoData.state_prov || geoData.country_name || 'Lima'}`;
+          setUserLocation(preciseLocation);
+          
+          // Crear técnicos GPS
+          const gpsTechnicians = [
+            {
+              name: "Carlos Mendoza",
+              location: `Cerca de ${geoData.district || 'tu ubicación'}`,
+              distance: `${(Math.random() * 2 + 0.3).toFixed(1)} km`,
+              rating: 4.9,
+              reviews: 127,
+              solution: "🖥️ SOPORTE REMOTO COMPLETO: Acceso seguro a tu PC para eliminar virus, optimizar sistema a nivel lógico, limpiar archivos innecesarios y acelerar rendimiento. ¡Tu PC volverá a volar sin moverte de casa!",
+              price: 25,
+              time: "30-45 min",
+              specialty: "Especialista en Soporte Remoto"
+            },
+            {
+              name: "María Rodriguez",
+              location: `${geoData.district || 'Tu zona'}, Lima`,
+              distance: `${(Math.random() * 3 + 1.0).toFixed(1)} km`,
+              rating: 4.8,
+              reviews: 98,
+              solution: "🔧 SERVICIO PRESENCIAL PREMIUM: Reinstalación completa de Windows, particionado profesional de discos, instalación de programas esenciales y configuración personalizada. ¡Computadora como nueva con garantía!",
+              price: 35,
+              time: "2-3 horas",
+              specialty: "Técnica en Sistemas Presencial"
+            }
+          ];
+          
+          setTechnicians(gpsTechnicians);
+          await sendNotification(preciseLocation);
+          console.log('✅ Ubicación GPS:', preciseLocation);
+          
+        } catch (error) {
+          console.log('❌ Error procesando GPS, usando fallback IP');
+          await usarFallbackIP();
+        }
+      },
+      // ERROR GPS - usar fallback
+      async (error) => {
+        console.log('🚫 GPS rechazado/error:', error.message);
+console.log('⚠️ Usando fallback por IP en su lugar');
+        await usarFallbackIP();
+      },
+      { timeout: 10000, enableHighAccuracy: true }
+    );
+  } else {
+    console.log('📱 Navegador no soporta GPS, usando IP');
+    await usarFallbackIP();
   }
   
-  // Resto igual - simulación actual
+  // Función fallback por IP
+  async function usarFallbackIP() {
+    try {
+      const locationResponse = await fetch('/api/get-location', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ problema: problem })
+      });
+      
+      const locationData = await locationResponse.json();
+      
+      if (locationData.success) {
+        const realLocation = `${locationData.location.distrito}, ${locationData.location.ciudad}`;
+        setUserLocation(realLocation);
+        setTechnicians(locationData.technicians);
+        await sendNotification(realLocation);
+        console.log('🌐 USANDO FALLBACK IP - no GPS');
+console.log('📡 Respuesta IP API:', locationData);
+console.log('✅ Fallback IP final:', realLocation);
+      } else {
+        setUserLocation('Lima, Perú');
+        await sendNotification('Lima, Perú');
+      }
+    } catch (error) {
+      console.error('❌ Error fallback IP:', error);
+      setUserLocation('Lima, Perú');
+      await sendNotification('Lima, Perú');
+    }
+  }
+  
   setTimeout(() => {
-    setUserLocation('San Isidro, Lima');
     setStep('results');
   }, 3000);
 };
@@ -116,29 +213,32 @@ export default function FixzoApp() {
   }
 
   // PANTALLA DE RESULTADOS CON TÉCNICOS
-  if (step === 'results') {
-    const technicians = [
-      {
-        name: "Carlos Mendoza",
-        distance: "1.8 km",
-        rating: 4.9,
-        reviews: 127,
-        solution: "🖥️ SOPORTE REMOTO COMPLETO: Acceso seguro a tu PC para eliminar virus, optimizar sistema a nivel lógico, limpiar archivos innecesarios y acelerar rendimiento. ¡Tu PC volverá a volar sin moverte de casa!",
-        price: 25,
-        time: "30-45 min",
-        specialty: "Especialista en Soporte Remoto"
-      },
-      {
-        name: "María Rodriguez", 
-        distance: "2.3 km",
-        rating: 4.8,
-        reviews: 98,
-        solution: "🔧 SERVICIO PRESENCIAL PREMIUM: Reinstalación completa de Windows, particionado profesional de discos, instalación de programas esenciales y configuración personalizada. ¡Computadora como nueva con garantía!",
-        price: 35,
-        time: "2-3 horas",
-        specialty: "Técnica en Sistemas Presencial"
-      }
-    ];
+if (step === 'results') {
+  // Usar técnicos de geolocalización O fallback si no hay
+  const currentTechnicians = technicians.length > 0 ? technicians : [
+    {
+      name: "Carlos Mendoza",
+      location: "San Isidro, Lima",
+      distance: "1.8 km",
+      rating: 4.9,
+      reviews: 127,
+      solution: "🖥️ SOPORTE REMOTO COMPLETO: Acceso seguro a tu PC para eliminar virus, optimizar sistema a nivel lógico, limpiar archivos innecesarios y acelerar rendimiento. ¡Tu PC volverá a volar sin moverte de casa!",
+      price: 25,
+      time: "30-45 min",
+      specialty: "Especialista en Soporte Remoto"
+    },
+    {
+      name: "María Rodriguez",
+      location: "Miraflores, Lima", 
+      distance: "2.3 km",
+      rating: 4.8,
+      reviews: 98,
+      solution: "🔧 SERVICIO PRESENCIAL PREMIUM: Reinstalación completa de Windows, particionado profesional de discos, instalación de programas esenciales y configuración personalizada. ¡Computadora como nueva con garantía!",
+      price: 35,
+      time: "2-3 horas",
+      specialty: "Técnica en Sistemas Presencial"
+    }
+  ];
 
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative">
@@ -184,7 +284,7 @@ export default function FixzoApp() {
               <span className="text-3xl">✅</span>
             </div>
             <h2 className="text-3xl font-bold text-white mb-2">
-              ¡{technicians.length} técnicos especializados respondieron!
+              ¡{currentTechnicians.length} técnicos especializados respondieron!
             </h2>
             <p className="text-blue-100 text-lg">
               📍 Técnicos cerca de {userLocation}
@@ -202,7 +302,7 @@ export default function FixzoApp() {
 
           {/* Grid de técnicos */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            {technicians.map((tech, index) => (
+            {currentTechnicians.map((tech, index) => (
               <div key={index} className="bg-white rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center">
