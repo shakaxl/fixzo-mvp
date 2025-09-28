@@ -69,24 +69,26 @@ async (position) => {
     
     // Convertir coordenadas a dirección
     const apiKey = process.env.NEXT_PUBLIC_IPGEOLOCATION_API_KEY || 'tu-api-key-aqui';
-    console.log('🔗 URL llamada:', `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`);
     
-    const geoResponse = await fetch(`https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&lat=${latitude}&long=${longitude}`);
+    const geoResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1&accept-language=es`);
     const geoData = await geoResponse.json();
     
-    console.log('📡 Respuesta completa GPS API:', geoData);
-    console.log('🏠 Distrito detectado:', geoData.district);
-    console.log('🏙️ Ciudad detectada:', geoData.city);
-    console.log('🗺️ Provincia detectada:', geoData.state_prov);
           
-          const preciseLocation = `${geoData.district || geoData.city || 'Tu zona'}, ${geoData.state_prov || geoData.country_name || 'Lima'}`;
-          setUserLocation(preciseLocation);
-          
-          // Crear técnicos GPS
-          const gpsTechnicians = [
-            {
-              name: "Carlos Mendoza",
-              location: `Cerca de ${geoData.district || 'tu ubicación'}`,
+          // OpenStreetMap tiene estructura diferente
+const address = geoData.address || {};
+const distrito = address.suburb || address.neighbourhood || address.city_district || address.county;
+const ciudad = address.city || address.town || address.village || 'Lima';
+const provincia = address.state || address.region || 'Lima';
+
+
+const preciseLocation = `${distrito || ciudad}, ${provincia}`;
+setUserLocation(preciseLocation);
+
+// Crear técnicos GPS
+const gpsTechnicians = [
+  {
+    name: "Carlos Mendoza",
+    location: `${distrito || 'Tu zona'}, ${ciudad}`,
               distance: `${(Math.random() * 2 + 0.3).toFixed(1)} km`,
               rating: 4.9,
               reviews: 127,
