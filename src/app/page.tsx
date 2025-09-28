@@ -12,7 +12,17 @@ export default function FixzoApp() {
   const [userLocation, setUserLocation] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const [technicians, setTechnicians] = useState<any[]>([]);
+  const [technicians, setTechnicians] = useState<Array<{
+  name: string;
+  location: string;
+  distance: string;
+  rating: number;
+  reviews: number;
+  solution: string;
+  price: number;
+  time: string;
+  specialty: string;
+}>>([]);
 
   const handleStartDemo = () => {
     setStep('form');
@@ -68,7 +78,7 @@ async (position) => {
     console.log('📍 GPS obtenido:', latitude, longitude);
     
     // Convertir coordenadas a dirección
-    const apiKey = process.env.NEXT_PUBLIC_IPGEOLOCATION_API_KEY || 'tu-api-key-aqui';
+    
     
     const geoResponse = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&addressdetails=1&accept-language=es`);
     const geoData = await geoResponse.json();
@@ -114,10 +124,10 @@ const gpsTechnicians = [
           await sendNotification(preciseLocation);
           console.log('✅ Ubicación GPS:', preciseLocation);
           
-        } catch (error) {
-          console.log('❌ Error procesando GPS, usando fallback IP');
-          await usarFallbackIP();
-        }
+        } catch (gpsError) {
+  console.log('❌ Error procesando GPS, usando fallback IP');
+  await usarFallbackIP();
+}
       },
       // ERROR GPS - usar fallback
       async (error) => {
@@ -155,11 +165,11 @@ console.log('✅ Fallback IP final:', realLocation);
         setUserLocation('Lima, Perú');
         await sendNotification('Lima, Perú');
       }
-    } catch (error) {
-      console.error('❌ Error fallback IP:', error);
-      setUserLocation('Lima, Perú');
-      await sendNotification('Lima, Perú');
-    }
+    } catch (fallbackError) {
+  console.error('❌ Error fallback IP:', fallbackError);
+  setUserLocation('Lima, Perú');
+  await sendNotification('Lima, Perú');
+}
   }
   
   setTimeout(() => {
