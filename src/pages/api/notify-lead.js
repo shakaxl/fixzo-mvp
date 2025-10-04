@@ -18,8 +18,8 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        from: 'FIXZO <onboarding@resend.dev>',
-        to: ['wpadilla007@gmail.com'],
+        from: 'FIXZO <noreply@fixzo.app>',
+        to: ['fixzoperu@gmail.com'],
         subject: '🚨 NUEVO LEAD INTERESADO EN FIXZO!',
         html: `
           <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
