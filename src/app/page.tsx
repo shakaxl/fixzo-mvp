@@ -257,18 +257,7 @@ if (step === 'results') {
           <StarField />
 
           {/* Google Analytics - NUEVO CÓDIGO */}
-    <Script
-      src={`https://www.googletagmanager.com/gtag/js?id=G-L5QTMP9WG8`}
-      strategy="afterInteractive"
-    />
-    <Script id="google-analytics" strategy="afterInteractive">
-      {`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-L5QTMP9WG8');
-      `}
-    </Script>
+    
         {/* Header */}
         <div className="bg-white/10 backdrop-blur-sm border-b border-white/20">
           <div className="max-w-5xl mx-auto px-4 py-4 flex justify-center relative">
