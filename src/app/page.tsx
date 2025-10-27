@@ -4,6 +4,8 @@ import { useState, useRef } from 'react';
 import Image from 'next/image';
 import StarField from '../components/StarField';
 import Script from 'next/script';
+import { motion } from 'framer-motion';
+import { Upload, MapPin, Star, Clock, DollarSign, CheckCircle, ArrowRight, Users, Shield, Zap, Menu, X, Play } from 'lucide-react';
 
 export default function FixzoApp() {
   const [step, setStep] = useState('landing');
@@ -506,8 +508,8 @@ if (step === 'results') {
           <Image 
             src="/images/logo.png" 
             alt="FIXZO Logo" 
-            width={120} 
-            height={120}
+            width={200} 
+            height={200}
             className=""
           />
         
@@ -567,7 +569,14 @@ if (step === 'results') {
         </div>
       </div>
 
-      <section className="bg-white/5 backdrop-blur-sm py-20 border-t border-white/10">
+      {/* Sección Nuestro Servicio */}
+      <motion.section
+        className="bg-white/5 backdrop-blur-sm py-20 border-t border-white/10"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        viewport={{ once: true, amount: 0.25 }}
+      >
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
@@ -592,7 +601,157 @@ if (step === 'results') {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
+
+      {/* Sección Sobre Nosotros */}
+      <motion.section
+        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative py-20 border-t border-white/10"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut', delay: 0.05 }}
+        viewport={{ once: true, amount: 0.25 }}
+      >
+        <StarField />
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="order-2 md:order-1">
+              <div className="overflow-hidden rounded-lg">
+                <Image
+                  src="/images/about-us.png"
+                  alt="Servicio técnico profesional"
+                  width={800}
+                  height={450}
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <h2 className="text-4xl font-black text-white mb-6 drop-shadow-lg">Sobre Nosotros</h2>
+              <p className="text-white font-semibold leading-relaxed text-lg mb-6">
+                Somos <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">FIXZO</span>, 
+                la plataforma líder en soporte técnico que conecta a miles de usuarios con soluciones rápidas, 
+                confiables y profesionales.
+              </p>
+              <p className="text-blue-100 leading-relaxed text-lg mb-6">
+                Nos destacamos por <span className="text-white font-bold">resolver en minutos</span> lo que otros 
+                tardan horas.
+              </p>
+              <p className="text-white font-semibold leading-relaxed text-lg">
+                Porque cuando se trata de tecnología, la confianza empieza con la velocidad.
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Sección Testimonios */}
+      <motion.section
+        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative py-20 border-t border-white/10"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut', delay: 0.08 }}
+        viewport={{ once: true, amount: 0.25 }}
+      >
+        <StarField />
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-black text-white mb-4 drop-shadow-lg">
+              Lo Que Dicen Nuestros Usuarios
+            </h2>
+            <p className="text-blue-100 text-lg">
+              Miles de problemas resueltos, miles de usuarios satisfechos
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold text-lg">CA</span>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold">Carlos Abanto</h4>
+                  <div className="flex text-yellow-400">
+                    {'⭐'.repeat(5)}
+                  </div>
+                </div>
+              </div>
+              <p className="text-blue-100 leading-relaxed">
+                "Tuve un problema crítico a las 11 PM y pensé que tendría que esperar hasta el día siguiente. 
+                Con FIXZO encontré un técnico en minutos que me ayudó de forma remota. ¡Increíble servicio!"
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold text-lg">RV</span>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold">Rafael Vásquez</h4>
+                  <div className="flex text-yellow-400">
+                    {'⭐'.repeat(5)}
+                  </div>
+                </div>
+              </div>
+              <p className="text-blue-100 leading-relaxed">
+                "No podía creer que pudieran solucionar mi problema sin que tuviera que salir de casa. 
+                Soporte remoto profesional, rápido y confiable. FIXZO superó mis expectativas."
+              </p>
+            </div>
+
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
+              <div className="flex items-center mb-4">
+                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mr-3">
+                  <span className="text-white font-bold text-lg">MP</span>
+                </div>
+                <div>
+                  <h4 className="text-white font-bold">María Paz Rojas</h4>
+                  <div className="flex text-yellow-400">
+                    {'⭐'.repeat(5)}
+                  </div>
+                </div>
+              </div>
+              <p className="text-blue-100 leading-relaxed">
+                "Necesitaba instalar un software especializado para mi trabajo urgente. El técnico no solo 
+                lo instaló, sino que me enseñó a usarlo. Servicio excepcional y muy profesional."
+              </p>
+            </div>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* CTA Final */}
+      <motion.section
+        className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative py-20 border-t border-white/10"
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+        viewport={{ once: true, amount: 0.25 }}
+      >
+        <StarField />
+        <div className="max-w-4xl mx-auto text-center px-4">
+          <h2 className="text-5xl font-black text-white mb-6 drop-shadow-lg">
+            ¿Listo para Solucionar tus Problemas con un Click?
+          </h2>
+          <p className="text-blue-100 text-xl mb-8 leading-relaxed">
+            Únete a miles de usuarios satisfechos que ya resolvieron sus problemas técnicos con FIXZO. 
+            <br />
+            <span className="text-white font-semibold">Rápido, confiable y sin complicaciones.</span>
+          </p>
+          <button
+            onClick={handleStartDemo}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-12 py-5 rounded-xl font-black text-xl hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-110 shadow-2xl inline-flex items-center"
+          >
+            <Zap className="w-6 h-6 mr-3" />
+            Resolver Mi Problema GRATIS
+            <ArrowRight className="ml-3 w-6 h-6" />
+          </button>
+          <p className="text-blue-200 text-sm mt-6">
+            ✓ Sin compromiso • ✓ Respuesta inmediata • ✓ Técnicos verificados
+          </p>
+        </div>
+      </motion.section>
     </div>
   );
 }
