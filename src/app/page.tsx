@@ -677,8 +677,8 @@ if (step === 'results') {
                 </div>
               </div>
               <p className="text-blue-100 leading-relaxed">
-                "Tuve un problema crítico a las 11 PM y pensé que tendría que esperar hasta el día siguiente. 
-                Con FIXZO encontré un técnico en minutos que me ayudó de forma remota. ¡Increíble servicio!"
+                Tuve un problema crítico a las 11 PM y pensé que tendría que esperar hasta el día siguiente. 
+                Con FIXZO encontré un técnico en minutos que me ayudó de forma remota. ¡Increíble servicio!
               </p>
             </div>
 
@@ -695,8 +695,8 @@ if (step === 'results') {
                 </div>
               </div>
               <p className="text-blue-100 leading-relaxed">
-                "No podía creer que pudieran solucionar mi problema sin que tuviera que salir de casa. 
-                Soporte remoto profesional, rápido y confiable. FIXZO superó mis expectativas."
+                No podía creer que pudieran solucionar mi problema sin que tuviera que salir de casa. 
+                Soporte remoto profesional, rápido y confiable. FIXZO superó mis expectativas.
               </p>
             </div>
 
@@ -713,8 +713,8 @@ if (step === 'results') {
                 </div>
               </div>
               <p className="text-blue-100 leading-relaxed">
-                "Necesitaba instalar un software especializado para mi trabajo urgente. El técnico no solo 
-                lo instaló, sino que me enseñó a usarlo. Servicio excepcional y muy profesional."
+                Necesitaba instalar un software especializado para mi trabajo urgente. El técnico no solo 
+                lo instaló, sino que me enseñó a usarlo. Servicio excepcional y muy profesional.
               </p>
             </div>
           </div>
