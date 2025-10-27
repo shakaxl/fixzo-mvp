@@ -666,8 +666,14 @@ if (step === 'results') {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-lg">CA</span>
+                <div className="w-12 h-12 mr-3 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/testimonial-ca.png"
+                    alt="Carlos Abanto"
+                    width={48}
+                    height={48}
+                    className="object-cover w-12 h-12 rounded-full"
+                  />
                 </div>
                 <div>
                   <h4 className="text-white font-bold">Carlos Abanto</h4>
@@ -684,8 +690,14 @@ if (step === 'results') {
 
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-lg">RV</span>
+                <div className="w-12 h-12 mr-3 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/testimonial-rv.png"
+                    alt="Rafael Vásquez"
+                    width={48}
+                    height={48}
+                    className="object-cover w-12 h-12 rounded-full"
+                  />
                 </div>
                 <div>
                   <h4 className="text-white font-bold">Rafael Vásquez</h4>
@@ -702,8 +714,14 @@ if (step === 'results') {
 
             <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 border border-white/20">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-full flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-lg">MP</span>
+                <div className="w-12 h-12 mr-3 overflow-hidden rounded-full">
+                  <Image
+                    src="/images/testimonial-mp.png"
+                    alt="María Paz"
+                    width={48}
+                    height={48}
+                    className="object-cover w-12 h-12 rounded-full"
+                  />
                 </div>
                 <div>
                   <h4 className="text-white font-bold">María Paz Rojas</h4>
@@ -713,8 +731,8 @@ if (step === 'results') {
                 </div>
               </div>
               <p className="text-blue-100 leading-relaxed">
-                Necesitaba instalar un software especializado para mi trabajo urgente. El técnico no solo 
-                lo instaló, sino que me enseñó a usarlo. Servicio excepcional y muy profesional.
+                Mi computadora no encendía y necesitaba arreglarla urgente. Encontré un técnico cerca de mi casa gracias a FIXZO, 
+                y en menos de 15 minutos llegó a solucionarlo. ¡Increíble servicio, rápido y confiable!
               </p>
             </div>
           </div>
